@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="login py-5 border-top-1">
+    <div class="container">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+        </ul>
+        {% endif %}
+        {% if orders %}
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <th>Order Id</th>
+                        <th>Address</th>
+                        <th>date Time</th>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td><a href="{% url 'OrderDetails' order_id=order.id %}">{{order.id}}</a></td>
+                            <td>{{order.address}}</td>
+                            <td>{{order.date_time}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% else %}
+        <div class="row col-md-12">
+            <div class="text-center">
+                <h6> You Have not placed any order yet </h6>
+                <a href="{% url 'homePage' %}">
+                    <button class="btn btn-primary">Continue Shopping</button>
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock content %}

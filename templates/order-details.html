@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="login py-5 border-top-1">
+    <div class="container">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+        </ul>
+        {% endif %}
+        {% if order %}
+        <div class="row">
+            <div class="col-md-8">
+                <table class="table">
+                    <thead>
+                        <th></th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </thead>
+                    <tbody>
+                        {% for orderDetails in order.orders.all %}
+                        <tr>
+                            <td><img src="{{orderDetails.product.image.url}}" style="width:2em"></td>
+                            <td>{{orderDetails.product.name|title}}</td>
+                            <td>{{orderDetails.quantity}}</td>
+                            <td>${{orderDetails.product.price}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <p>Order Id: {{order.id}}</p>
+                <p>Name: {{request.user.first_name}} {{request.user.last_name}}</p>
+                <p>Email: {{request.user.email}}</p>
+                <p>Delivery Address: {{order.address}}
+            </div>
+
+        </div>
+        {% else %}
+        <div class="row col-md-12">
+            <div class="text-center">
+                <h6> You Have not added any product into cart </h6>
+                <a href="{% url 'homePage' %}">
+                    <button class="btn btn-primary">Continue Shopping</button>
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock content %}

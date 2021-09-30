@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="login py-5 border-top-1">
+    <div class="container">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+        </ul>
+        {% endif %}
+        {% if carts %}
+        <div class="row">
+            <div class="col-md-8">
+                <table class="table">
+                    <thead>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </thead>
+                    <tbody>
+                        {% for cart in carts %}
+                        <tr>
+                            <td>{{cart.product.name|title}}</td>
+                            <td>{{cart.quantity}}</td>
+                            <td>${{cart.product.price}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <form method="POST" url="{% url 'CustomerCheckOut' %}">
+                    {% csrf_token %}
+                    <p>Name: {{request.user.first_name}} {{request.user.last_name}}</p>
+                    <p>Email: {{request.user.email}}</p>
+                    <p>Delivery Address:</p>
+                    <textarea class="border p-3 w-100 my-2" name="address">{{userProfile.address}}</textarea>
+                    <button class="btn btn-primary" type="submit">Place Order</button>
+                </form>
+            </div>
+            
+        </div>
+        {% else %}
+        <div class="row col-md-12">
+            <div class="text-center">
+                <h6> You Have not added any product into cart </h6>
+                <a href="{% url 'homePage' %}">
+                    <button class="btn btn-primary">Continue Shopping</button>
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock content %}

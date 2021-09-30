@@ -1,0 +1,36 @@
+1. ProductCategory 
+    1. Name = CharField()
+    2. Status = Boolean()
+    
+    
+2. Product 
+    1. Product Category = FK(Product Category) delete on pk delete
+    2. Name = CharField()
+    3. Price = Int()
+    4. Description = TextField()
+    5. Image = ImageField()
+    6. Status = Boolean()
+    
+    
+3. UserProfile
+    1. User = FK(DJANGO USER MODEL) delete on pk delete
+    2. Address = TextField()
+    3. Mobile = CharField()
+    4. Profile Picture = ImageField()
+    
+    
+4. Cart
+    1. Product = FK(Product) delete on PK delete
+    2. User = FK(DJANGO USER MODEL) delete on pk delete
+    3. Quantity = Int()
+    
+    
+5. Orders
+    1. User = FK(DJANGO USER MODEL) delete on pk delete
+    2. Date of Order = DateTime()
+    
+    
+6. Order Details 
+    1. order = FK(Order) delete on pk delete
+    2. Product = FK(Product) delete on PK delete
+    3. Quantity = Int()

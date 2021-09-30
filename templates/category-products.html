@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row col-md-12">
+        <div class="col-md-2">
+            <div class="sidebar">
+                <!-- Search Widget -->
+                <div class="widget search p-0">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="expire" placeholder="Search...">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    </div>
+                </div>
+                <!-- Category Widget -->
+                <div class="widget category">
+                    <!-- Widget Header -->
+                    <h5 class="widget-header">Categories</h5>
+                    <ul class="category-list">
+                    {% for productCategory in productCategories %}
+                        <li>
+                            <a href="{% url 'CategoryProducts' product_category_id=productCategory.id %}">{{productCategory.name|title}}</a>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+               
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                {% for product in products %}
+                <div class="col-md-3">
+                    <div class="product-item bg-light">
+                        <div class="card">
+                            <div class="thumb-content">
+                                <div class="price">${{product.price}}</div>
+                                <a href="{% url 'ProductDetails' product_id=product.id %}" tabindex="0">
+                                    <img class="card-img-top img-fluid" src="{{product.image.url}}" alt="Card image cap" style="height:300px">
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title"><a href="{% url 'ProductDetails' product_id=product.id %}" tabindex="0">{{product.name|title}}</a></h4>
+                                <ul class="list-inline product-meta">
+                                    <li class="list-inline-item">
+                                        <i class="fa fa-folder-open-o"></i> {{product.product_category.name|title}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+        
+                </div>
+                {% endfor %}
+        
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
